@@ -9,17 +9,24 @@ use App\Model\Auth;
 
 class AuthClass
 {
-    public static function login(array $data): bool
+    public static function login(array $data): array | bool
     {
         $email = filterPostdata($_POST['email']);
         $password = filterPostdata($_POST['password']);
+        $error = [];
+        $error['hasError'] = false;
 
         if (empty($email) || empty($password)) {
-            echo "password or email is  empty";
+            $error['empty'] = "password or email is  empty";
         }
 
         if (!validateEmail($email)) {
-            echo "Email address is not Valid";
+            $error['invalidEmail'] =  "Email address is not Valid";
+        }
+
+        if (count($error)) {
+            $error['hasError'] = true;
+            return $error;
         }
 
         return  Auth::login($email, $password);
@@ -45,7 +52,7 @@ class AuthClass
             return "Password confirm password should be match";
         }
 
-       $message =  Auth::register($fullName, $email, $password);
+        $message =  Auth::register($fullName, $email, $password);
 
         return $message;
     }

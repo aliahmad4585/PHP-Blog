@@ -68,9 +68,12 @@ class Auth
         $p = ['email' => $email, 'password' => $password];
         $stmt->execute($p);
         if ($stmt->fetchColumn() != 0) {
-            return true;
+            return $stmt->fetchAll();
         }
 
-        return false;
+        return [
+            'hasError' => true,
+            'message' => "user not found"
+        ];
     }
 }

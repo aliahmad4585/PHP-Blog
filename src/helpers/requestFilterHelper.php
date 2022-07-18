@@ -1,15 +1,9 @@
 <?php
 
-function filterPostdata($input): string
+function filterPostdata($input, $encoding = 'UTF-8'): string
 {
-    return noSpecialCharacters(filter_var($input));
+    return htmlspecialchars(filter_var($input), ENT_QUOTES, $encoding);
 }
-
-function noSpecialCharacters($input, $encoding = 'UTF-8'): string
-{
-    return htmlspecialchars($input, ENT_QUOTES, $encoding);
-}
-
 
 function validateEmail($input): bool
 {
