@@ -38,8 +38,22 @@ class BlogClass
         }
 
         $data = Blog::addPost($title, $link, $description, $userId);
+        return $data;
+    }
 
-        print_r($data);
+    public static function getPosts($page = 1, $postPerPage = 20): array
+    {
+        $error = [];
+        if (!is_numeric($page)) {
+            $error['page'] = "page number should be numeric";
+        }
+
+        if (count($error)) {
+            $error['hasError'] = true;
+            return $error;
+        }
+
+        $data = Blog::getPosts($page, $postPerPage);
         return $data;
     }
 }

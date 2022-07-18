@@ -46,4 +46,26 @@ class Blog
             'message' => $message
         ];
     }
+
+    public static function getPosts($page, $postPerPage)
+    {
+        try {
+            $offset = ($page-1) * $postPerPage;
+            $pdo = Database::getConnection();
+            $sql = 'select p.*, u.name from posts p join users u on u.id = p.user_id order by p.created_at desc limit '.$offset.', '.$postPerPage.'';
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $posts =  $stmt->fetchAll();
+
+            return $posts;
+        } catch (PDOException $e) {
+
+            $message = $e->getMessage();
+        }
+
+        return [
+            'hasError' => true,
+            'message' => $message
+        ];
+    }
 }

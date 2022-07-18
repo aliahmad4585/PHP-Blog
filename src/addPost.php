@@ -1,5 +1,6 @@
 <?php
 require('config/bootstrap.php');
+require('layouts/header.php');
 
 if (!isset($_SESSION["isLoggedIn"])) {
 
@@ -16,7 +17,6 @@ if (isset($_POST['add']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location:index.php");
     }
 }
-require('layouts/header.php');
 ?>
 <main role="main">
     <div class="container mt-5">
