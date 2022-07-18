@@ -22,26 +22,32 @@ $posts =  BlogClass::getPosts($page, $postPerPage);
                 <div class="row single-blog">
                     <div class="col-md-9 single-blog-text">
                         <div class="single-blog-header-text">
-                            <a href="singlepost.php?id=" <?php echo $value['id']; ?>>
+                            <a href="singlepost.php?id=<?php echo $value['id']; ?>" class="ancher-link">
                                 <p><?php echo $value['created_at'] . ' - ' . $value['post_title']; ?></p>
                             </a>
                         </div>
                         <p>
-                        <p>
-                            <?php
-                            echo strlen($value['post_content']) > 1000 ?
-                                substr($value['post_content'], 0, 1000) . '......' :
-                                $value['post_content'];
-                            ?>
-                        </p>
+                            <a href="singlepost.php?id=<?php echo $value['id']; ?>" class="ancher-link">
+                                <p>
+                                    <?php
+                                    echo strlen($value['post_content']) > 1000 ?
+                                        substr($value['post_content'], 0, 1000) . '......' :
+                                        $value['post_content'];
+                                    ?>
+                                </p>
+                            </a>
                         </p>
                     </div>
                     <div class="col-md-3 single-blog-image">
-                        <img src="<?php echo $value['post_image_link']; ?>" alt="">
+                        <a href="singlepost.php?id=<?php echo $value['id']; ?>">
+                            <img src="<?php echo $value['post_image_link']; ?>" alt="">
+                        </a>
                     </div>
                     <div class="single-blog-footer-text clearfix">
                         <div class="pull-left">Author: <?php echo $value['name']; ?></div>
-                        <div class="pull-right">Comments: 0</div>
+                        <a href="singlepost.php?id=<?php echo $value['id']; ?>" class="ancher-link">
+                            <div class="pull-right">Comments: 0</div>
+                        </a>
                     </div>
                 </div>
             <?php
@@ -66,7 +72,12 @@ $posts =  BlogClass::getPosts($page, $postPerPage);
 
 </main>
 
-
+<style>
+    .ancher-link {
+        text-decoration-style: none;
+        color: black;
+    }
+</style>
 <?php
 require('layouts/footer.php');
 ?>

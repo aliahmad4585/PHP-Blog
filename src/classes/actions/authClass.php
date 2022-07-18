@@ -55,9 +55,14 @@ class AuthClass
             return "Email address is not Valid";
         }
 
+        if (!isStrongPassword($password)) {
+            return "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
+        }
+
         if ($password !== $confirmPassword) {
             return "Password confirm password should be match";
         }
+
 
         $message =  Auth::register($fullName, $email, $password);
 
