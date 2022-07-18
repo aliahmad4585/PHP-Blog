@@ -53,25 +53,26 @@ if (!count($postDetails)) {
     <p class="text-center mt-3">Leave your comments below.</p>
     <div class="container mt-3 mb-3 single-blog">
 
-        <form class="" action="" method="">
+        <form action="" method="POST">
             <div class="form-group">
                 <label>Name*</label>
-                <input type="text" class="form-control" required>
+                <input type="text" name="name" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Mail*</label>
-                <input type="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Url*</label>
-                <input type="Url" class="form-control" required>
+                <input type="Url" name="url" class="form-control" required>
             </div>
             <div class="form-group">
-                <label>Kommentar*</label>
-                <textarea class="form-control" name="comments">
+                <label>comment*</label>
+                <textarea class="form-control" name="comment">
 
                 </textarea>
             </div>
+            <input type="hidden" name="postId" class="form-control" value="<?php echo $postDetails['id']; ?>">
             <div class="form-group">
                 <button type="submit" class="btn btn-info" name="">Submit</button>
             </div>
