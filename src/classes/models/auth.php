@@ -2,14 +2,14 @@
 
 namespace App\Model;
 
-require ('classes/models/connection.php');
+require('classes/models/connection.php');
 
-use App\Model\Database;
+use App\Class\Model\Database;
 
 class Auth
 {
 
-    public static function register($fullName,$email, $password)
+    public static function register($fullName, $email, $password)
     {
         $pdo = Database::getDatabaseConnect();
 
@@ -20,27 +20,25 @@ class Auth
 
             $hashPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            $sql = "insert into register (fullname, email, `password`, status) values(:fullName,:email,:pass, 1)";
+            $sql = "insert into users (name, email, `password`) values(:name,:email,:password)";
 
             try {
                 $handle = $pdo->prepare($sql);
                 $params = [
-                    ':fullName' => $fullName,
+                    ':name' => $fullName,
                     ':email' => $email,
-                    ':pass' => $hashPassword,
+                    ':password' => $hashPassword,
                 ];
 
                 $handle->execute($params);
 
                 $message = 'User has been created successfully';
-
             } catch (PDOException $e) {
 
-                error_log($e->getMessage(), 3, 'app.log');
+                return $e->getMessage();
             }
-
         } catch (\Exception $e) {
-            error_log($e->getMessage(), 3, 'app.log');
+            return $e->getMessage();
         }
 
         return $message;
@@ -50,12 +48,12 @@ class Auth
     private static function checkUserAlreadyExistsOrNot(string $email): bool
     {
         $pdo = Database::getDatabaseConnect();
-        $sql = 'select * from register where email = :email';
+        $sql = 'select * from users where email = :email';
         $stmt = $pdo->prepare($sql);
         $p = ['email' => $email];
         $stmt->execute($p);
 
-        if ($stmt->rowCount() != 0) {
+        if ($stmt->fetchColumn() != 0) {
             return true;
         }
 
@@ -64,10 +62,15 @@ class Auth
 
     public static function login($email, $password)
     {
+        $pdo = Database::getDatabaseConnect();
+        $sql = 'select count(*) as userCount from users where email = :email  and password= :password';
+        $stmt = $pdo->prepare($sql);
+        $p = ['email' => $email, 'password' => $password];
+        $stmt->execute($p);
+        if ($stmt->fetchColumn() != 0) {
+            return true;
+        }
 
-
-
-         return 1 
-
+        return false;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Class\Models;
+namespace App\Class\Model;
 
 class Database
 {
@@ -16,7 +16,7 @@ class Database
             }
             return self::$con;
         } catch (\PDOException $e) {
-            error_log($e->getMessage(), 3, 'app.log');
+            echo $e->getMessage();
         }
     }
 }

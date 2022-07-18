@@ -1,5 +1,4 @@
 <?php
-require('layouts/header.php');
 require('config/bootstrap.php');
 
 use App\Class\AuthClass;
@@ -7,6 +6,8 @@ use App\Class\AuthClass;
 if (isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     AuthClass::login($_POST);
 }
+
+require('layouts/header.php');
 
 ?>
 <main role="main" class="mt-5">
