@@ -6,6 +6,10 @@ use App\Class\AuthClass;
 $response = [];
 if (isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $response =  AuthClass::login($_POST);
+
+    if (isset($response['isLoggedIn'])) {
+        header("Location:index.php");
+    }
 }
 
 require('layouts/header.php');
@@ -13,22 +17,22 @@ require('layouts/header.php');
 ?>
 <main role="main" class="mt-5">
     <div class="container">
-    <?php if(isset($response['hasError']) && $response['hasError']){ ?>
-    <div id="message">
-            <p class="alert alert-info">
-                <?php
-                  foreach($response as $key=>$value){
-                       if($key == 'hasError'){
-                           continue;
-                       }
-                       echo $response[$key];
-                  }
-                
-                ?>
-            </p>
+        <?php if (isset($response['hasError']) && $response['hasError']) { ?>
+            <div id="message">
+                <p class="alert alert-info">
+                    <?php
+                    foreach ($response as $key => $value) {
+                        if ($key == 'hasError') {
+                            continue;
+                        }
+                        echo $response[$key] . "<br>";
+                    }
 
-        </div>
-    <?php } ?>
+                    ?>
+                </p>
+
+            </div>
+        <?php } ?>
         <form class="" method="POST" action="">
             <div class="form-group">
                 <label>

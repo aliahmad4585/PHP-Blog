@@ -63,16 +63,25 @@ class Auth
     public static function login($email, $password)
     {
         $pdo = Database::getDatabaseConnect();
-        $sql = 'select count(*) as userCount from users where email = :email  and password= :password';
+        $sql = 'select name, email, password from users where email = :email';
         $stmt = $pdo->prepare($sql);
-        $p = ['email' => $email, 'password' => $password];
+        $p = ['email' => $email];
         $stmt->execute($p);
-        if ($stmt->fetchColumn() != 0) {
-            return $stmt->fetchAll();
+
+        $user =  $stmt->fetchAll();
+
+        if (count($user)) {
+
+            $userPassword =  $user[0]['password'];
+            if (password_verify($password, $userPassword)) {
+                $user[0]['isLoggedIn'] = true;
+                return $user[0];
+            }
         }
 
         return [
             'hasError' => true,
+            'isLoggedIn' => false,
             'message' => "user not found"
         ];
     }

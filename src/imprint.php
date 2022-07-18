@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('layouts/header.php');
 ?>
 <main role="main">

@@ -2,6 +2,7 @@
 
 namespace App\Class;
 
+session_start();
 require('helpers/requestFilterHelper.php');
 require('classes/models/auth.php');
 
@@ -14,7 +15,7 @@ class AuthClass
         $email = filterPostdata($_POST['email']);
         $password = filterPostdata($_POST['password']);
         $error = [];
-        $error['hasError'] = false;
+        $error = [];
 
         if (empty($email) || empty($password)) {
             $error['empty'] = "password or email is  empty";
@@ -29,7 +30,13 @@ class AuthClass
             return $error;
         }
 
-        return  Auth::login($email, $password);
+        $data = Auth::login($email, $password);
+
+        if ($data['isLoggedIn']) {
+            $_SESSION["name"] = $data['name'];
+            $_SESSION["isLoggedIn"] = $data['isLoggedIn'];
+        }
+        return $data;
     }
 
     public static function register(array $data): string
