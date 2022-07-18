@@ -5,3 +5,4 @@ define("PROJECT_PATH", __DIR__ . "/../");
 require_once PROJECT_PATH . "/config/database.php";
 
 require_once PROJECT_PATH . "/classes/actions/AuthClass.php";
+require_once PROJECT_PATH . "/classes/actions/BlogClass.php";

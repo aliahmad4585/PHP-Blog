@@ -5,8 +5,8 @@ use App\Class\AuthClass;
 
 $response = [];
 if (isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
-    $response =  AuthClass::login($_POST);
 
+    $response =  AuthClass::login($_POST);
     if (isset($response['isLoggedIn'])) {
         header("Location:index.php");
     }

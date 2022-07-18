@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -9,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
-    <title>Backend developer task check24</title>
+    <title>Blog</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +27,7 @@
             </div>
 
             <div class="company-title ml-5 mt-2">
-                <h1>My Blog Name </h1>
+                <h1>Simple Blog </h1>
             </div>
 
         </div>
@@ -41,9 +40,11 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="index.php">Home <span class="sr-only">Home</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="addPost.php">new entry</a>
-                </li>
+                <?php if (isset($_SESSION["name"])) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="addPost.php">new entry</a>
+                    </li>
+                <?php } ?>
                 <li class="nav-item">
                     <a class="nav-link" href="imprint.php">Imprint</a>
                 </li>
@@ -51,15 +52,15 @@
         </div>
         <div class="pull-right">
             <ul class="navbar-nav mr-auto text-white">
-                <?php if (isset($_SESSION["name"])) { ?>
+                <?php if (isset($_SESSION["isLoggedIn"])) { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"><?php echo $_SESSION["name"] . ', '; ?> Logout</a>
                     </li>
                 <?php } else { ?>
 
-                <li class="nav-item active">
-                    <a class="nav-link" href="login.php">Login</a>
-                </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="login.php">Login</a>
+                    </li>
 
                 <?php } ?>
 

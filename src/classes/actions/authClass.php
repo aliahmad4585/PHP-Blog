@@ -12,9 +12,8 @@ class AuthClass
 {
     public static function login(array $data): array | bool
     {
-        $email = filterPostdata($_POST['email']);
-        $password = filterPostdata($_POST['password']);
-        $error = [];
+        $email = filterPostdata($data['email']);
+        $password = filterPostdata($data['password']);
         $error = [];
 
         if (empty($email) || empty($password)) {
@@ -33,6 +32,7 @@ class AuthClass
         $data = Auth::login($email, $password);
 
         if ($data['isLoggedIn']) {
+            $_SESSION["id"] = $data['id'];
             $_SESSION["name"] = $data['name'];
             $_SESSION["isLoggedIn"] = $data['isLoggedIn'];
         }

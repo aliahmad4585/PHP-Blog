@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Class\Model;
+namespace App\Model;
 
 class Database
 {
     private static object $con;
 
-    public static function getDatabaseConnect(): object
+    public static function getConnection(): object
     {
         try {
             self::$con = new \PDO('mysql:host='.DB_HOST.';dbname='.DB_DATABASE_NAME, DB_USERNAME, DB_PASSWORD);

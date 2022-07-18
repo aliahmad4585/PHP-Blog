@@ -4,14 +4,12 @@ namespace App\Model;
 
 require('classes/models/connection.php');
 
-use App\Class\Model\Database;
-
 class Auth
 {
 
     public static function register($fullName, $email, $password)
     {
-        $pdo = Database::getDatabaseConnect();
+        $pdo = Database::getConnection();
 
         try {
             if (self::checkUserAlreadyExistsOrNot($email)) {
@@ -47,7 +45,7 @@ class Auth
 
     private static function checkUserAlreadyExistsOrNot(string $email): bool
     {
-        $pdo = Database::getDatabaseConnect();
+        $pdo = Database::getConnection();
         $sql = 'select * from users where email = :email';
         $stmt = $pdo->prepare($sql);
         $p = ['email' => $email];
@@ -62,8 +60,8 @@ class Auth
 
     public static function login($email, $password)
     {
-        $pdo = Database::getDatabaseConnect();
-        $sql = 'select name, email, password from users where email = :email';
+        $pdo = Database::getConnection();
+        $sql = 'select id, name, email, password from users where email = :email';
         $stmt = $pdo->prepare($sql);
         $p = ['email' => $email];
         $stmt->execute($p);
