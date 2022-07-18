@@ -56,4 +56,20 @@ class BlogClass
         $data = Blog::getPosts($page, $postPerPage);
         return $data;
     }
+
+    public static function getPostDetails($postId): array
+    {
+        $error = [];
+        if (!is_numeric($postId)) {
+            $error['page'] = "post id should be numeric";
+        }
+
+        if (count($error)) {
+            $error['hasError'] = true;
+            return $error;
+        }
+
+        $data = Blog::getPostDetails($postId);
+        return $data;
+    }
 }
